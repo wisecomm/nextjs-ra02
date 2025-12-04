@@ -57,11 +57,7 @@ const sidebarItems: SidebarItem[] = [
         title: "관리",
         icon: Settings,
         children: [
-            {
-                title: "데이터 테이블",
-                href: "/payments", // Keeping href as "/payments" as per user's snippet, though it might be a typo for "/data-table"
-                icon: Table,
-            },
+
             {
                 title: "결제 관리",
                 href: "/payments",

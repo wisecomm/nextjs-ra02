@@ -38,7 +38,7 @@ export default function PaserverPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        console.debug("페이지 콜:", pagination.pageIndex);
+        console.error("페이지 콜:", pagination.pageIndex);
         const result = await getPaserverData(pagination.pageIndex, pagination.pageSize);
         setData(result.data);
         setPageCount(result.pageCount);
