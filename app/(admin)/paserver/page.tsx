@@ -9,34 +9,54 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  PaginationState,
 } from "@tanstack/react-table";
 import { columns } from "./columns";
-import { DataTable } from "@/components/data-table";
+import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "./data-table-toolbar";
-import { generatePayments } from "@/lib/mock";
-import { useState, useEffect } from "react";
 import { Payment } from "./columns";
 import * as React from "react";
+import { getPaserverData } from "@/components/data-table/paserver-actions";
 
 export default function PaserverPage() {
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = React.useState<Payment[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [enableMultiSelection, setEnableMultiSelection] = useState(true);
+  const [enableMultiSelection, setEnableMultiSelection] = React.useState(true);
 
-  useEffect(() => {
-    // Simulate async data fetching to avoid hydration mismatch and synchronous state update warning
-    const timer = setTimeout(() => {
-      setData(generatePayments(100));
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+  // Pagination state
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const [pageCount, setPageCount] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        console.debug("페이지 콜:", pagination.pageIndex);
+        const result = await getPaserverData(pagination.pageIndex, pagination.pageSize);
+        setData(result.data);
+        setPageCount(result.pageCount);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [pagination.pageIndex, pagination.pageSize]);
 
   const table = useReactTable({
     data,
     columns,
+    pageCount, // Pass pageCount to the table
+    manualPagination: true, // Enable manual pagination
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -45,12 +65,14 @@ export default function PaserverPage() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination, // Update pagination state
     enableMultiRowSelection: enableMultiSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination, // Pass pagination state
     },
   });
 
