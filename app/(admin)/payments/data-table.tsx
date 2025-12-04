@@ -96,13 +96,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         </DropdownMenu>
       </div>
       <div className="rounded-md border bg-white dark:bg-slate-900">
-        <Table>
+        <Table className="table-fixed">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      style={{ width: header.getSize() }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}

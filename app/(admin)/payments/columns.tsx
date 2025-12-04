@@ -42,11 +42,13 @@ export const columns: ColumnDef<Payment>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+    size: 50,
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: () => <div className="capitalize">success</div>,
+    size: 100,
   },
   {
     accessorKey: "email",
@@ -62,6 +64,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    size: 300,
   },
   {
     accessorKey: "amount",
@@ -75,11 +78,13 @@ export const columns: ColumnDef<Payment>[] = [
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
+    size: 100,
   },
   {
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => <div>{row.getValue("date")}</div>,
+    size: 150,
   },
   {
     id: "actions",
@@ -107,5 +112,6 @@ export const columns: ColumnDef<Payment>[] = [
         </DropdownMenu>
       );
     },
+    size: 50,
   },
 ];
