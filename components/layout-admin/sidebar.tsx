@@ -16,6 +16,7 @@ import {
     ChevronDown,
     Settings,
     LucideIcon,
+    Table,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -57,9 +58,19 @@ const sidebarItems: SidebarItem[] = [
         icon: Settings,
         children: [
             {
+                title: "데이터 테이블",
+                href: "/payments", // Keeping href as "/payments" as per user's snippet, though it might be a typo for "/data-table"
+                icon: Table,
+            },
+            {
                 title: "결제 관리",
                 href: "/payments",
                 icon: CreditCard,
+            },
+            {
+                title: "Paserver",
+                href: "/paserver",
+                icon: Table,
             },
             {
                 title: "게시글 관리",

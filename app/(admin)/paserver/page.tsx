@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import { Payment } from "./columns";
 import * as React from "react";
 
-export default function PaymentsPage() {
+export default function PaserverPage() {
   const [data, setData] = useState<Payment[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -59,8 +59,8 @@ export default function PaymentsPage() {
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Payments</h1>
-            <p className="text-muted-foreground">Manage your payment history</p>
+            <h1 className="text-3xl font-bold tracking-tight">Paserver</h1>
+            <p className="text-muted-foreground">Manage your paserver history</p>
           </div>
         </div>
 
